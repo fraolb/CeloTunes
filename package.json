@@ -26,5 +26,8 @@
   "keywords": [
     "celo-composer",
     "celo"
-  ]
+  ],
+  "devDependencies": {
+    "@types/react-slick": "^0.23.13"
+  }
 }

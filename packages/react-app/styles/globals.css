@@ -13,3 +13,12 @@
 .input-dark::-webkit-calendar-picker-indicator {
   filter: invert(1); /* Invert the color of the calendar icon */
 }
+
+/* Custom global styles */
+body {
+  @apply bg-lightBackground text-lightText transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-darkBackground text-darkText;
+}

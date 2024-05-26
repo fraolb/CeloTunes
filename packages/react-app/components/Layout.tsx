@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
+import Navigation from "./Navigation";
 
 interface Props {
   children: ReactNode;
@@ -8,11 +9,9 @@ interface Props {
 const Layout: FC<Props> = ({ children }) => {
   return (
     <>
-      <div className="bg-mainDark text-white overflow-hidden flex flex-col min-h-screen">
-        <Header />
-        <div className="py-4 max-w-7xl mx-auto space-y-8 sm:px-6 lg:px-8">
-          {children}
-        </div>
+      <div>
+        <Navigation />
+        <div>{children}</div>
         {/* <Footer /> */}
       </div>
     </>

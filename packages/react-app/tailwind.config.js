@@ -8,33 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        /** primary */
-        main: "#39e600",
-        mainLight: "#8cff66",
-        mainHard: "#269900",
-        prosperity: "#FCFF52",
-        forest: "#476520",
+        // Light theme colors
+        lightBackground: "#ffffff",
+        lightText: "#000000",
+        lightPrimary: "#1DA1F2",
+        lightSecondary: "#14171A",
 
-        ///bg color
-        mainBg: "#ffffff",
-        mainDark: "#252f35",
-        inputDarkBg: "#222633",
-        /** base */
-        gypsum: "#FCF6F1",
-        sand: "#E7E3D4",
-        wood: "#655947",
-        fig: "#1E002B",
-        /** functional */
-        snow: "#FFFFFF",
-        onyx: "#000000",
-        success: "#329F3B",
-        error: "#E70532",
-        disabled: "#9B9B9B",
-        /** accent */
-        sky: "#7CC0FF",
-        citrus: "#FF9A51",
-        lotus: "#FFA3EB",
-        lavender: "#B490FF",
+        // Dark theme colors
+        darkBackground: "#1a202c",
+        darkText: "#f5f8fa",
+        darkPrimary: "#1DA1F2",
+        darkSecondary: "#657786",
       },
     },
   },
