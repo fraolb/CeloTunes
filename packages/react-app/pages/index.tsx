@@ -48,24 +48,28 @@ export default function Home() {
       title: "Song Title 1",
       artist: "Artist Name 1",
       imageUrl: "https://via.placeholder.com/150",
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     },
     {
       id: 2,
       title: "Song Title 2",
       artist: "Artist Name 2",
       imageUrl: "https://via.placeholder.com/150",
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     },
     {
       id: 3,
       title: "Song Title 3",
       artist: "Artist Name 3",
       imageUrl: "https://via.placeholder.com/150",
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     },
     {
       id: 4,
       title: "Song Title 4",
       artist: "Artist Name 4",
       imageUrl: "https://via.placeholder.com/150",
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
     },
     // Add more music items as needed
   ];

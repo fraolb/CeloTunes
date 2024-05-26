@@ -9,6 +9,7 @@ interface Music {
   title: string;
   artist: string;
   imageUrl: string;
+  audioUrl: string;
 }
 
 interface CardSliderProps {
@@ -42,6 +43,7 @@ const CardSlider: React.FC<CardSliderProps> = ({ musicData }) => {
             title={music.title}
             artist={music.artist}
             imageUrl={music.imageUrl}
+            audioUrl={music.audioUrl}
           />
         </div>
       ))}

@@ -8,10 +8,12 @@ import type { AppProps } from "next/app";
 import { http, WagmiProvider, createConfig } from "wagmi";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
+import "../styles/audioPlayerStyles.scss";
 import { celo, celoAlfajores } from "wagmi/chains";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
+import { AudioProvider } from "@/context/AudioContect";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -46,9 +48,11 @@ function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
           <ThemeProvider attribute="class">
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <AudioProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </AudioProvider>
           </ThemeProvider>
         </RainbowKitProvider>
       </QueryClientProvider>

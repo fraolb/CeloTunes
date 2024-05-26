@@ -3,14 +3,24 @@ interface MusicCardProps {
   title: string;
   artist: string;
   imageUrl: string;
+  audioUrl: string;
 }
 
 import { useRouter } from "next/router";
+import { useAudio } from "@/context/AudioContect";
 
-const Card: React.FC<MusicCardProps> = ({ id, title, artist, imageUrl }) => {
+const Card: React.FC<MusicCardProps> = ({
+  id,
+  title,
+  artist,
+  imageUrl,
+  audioUrl,
+}) => {
   const router = useRouter();
+  const { setAudioSrc } = useAudio();
 
   const handleClick = () => {
+    setAudioSrc({ id, title, artist, imageUrl, audioUrl });
     router.push(`/music/${id}`);
   };
 

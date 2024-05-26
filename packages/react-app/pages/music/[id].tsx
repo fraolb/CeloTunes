@@ -8,6 +8,7 @@ interface MusicCardProps {
   title: string;
   artist: string;
   imageUrl: string;
+  audioUrl: string;
 }
 
 const MusicDetail = () => {
@@ -24,27 +25,46 @@ const MusicDetail = () => {
         title: `Song Title ${id}`,
         artist: `Artist Name ${id}`,
         imageUrl: "https://via.placeholder.com/150",
+        audioUrl: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id}.mp3`,
       };
       setMusicData(data);
     }
   }, [id]);
 
-  if (!musicData) return <div>Loading...</div>;
+  if (!musicData)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Loading...
+      </div>
+    );
 
   return (
-    <div className="container mx-auto p-4">
-      <img
-        src={musicData.imageUrl}
-        alt={musicData.title}
-        className="w-full h-48 object-cover"
-      />
-      <h1 className="text-2xl font-bold mt-4">{musicData.title}</h1>
-      <p className="text-xl">{musicData.artist}</p>
-      <AudioPlayer
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
-        volume={0.5}
-        // Try other props!
-      />
+    <div className="container mx-auto p-4 flex flex-col items-center">
+      <div className="max-w-lg w-full rounded overflow-hidden shadow-lg bg-white">
+        <img
+          src={musicData.imageUrl}
+          alt={musicData.title}
+          className="w-full h-48 object-cover"
+        />
+        <div className="px-6 py-4">
+          <h1 className="text-3xl font-bold mt-4 text-center">
+            {musicData.title}
+          </h1>
+          <p className="text-xl text-center text-gray-700">
+            {musicData.artist}
+          </p>
+        </div>
+      </div>
+      <div className="w-full mt-4">
+        <AudioPlayer
+          src={musicData.audioUrl}
+          volume={0.5}
+          className="rounded"
+          customAdditionalControls={[]}
+          customVolumeControls={[]}
+          layout="horizontal-reverse"
+        />
+      </div>
     </div>
   );
 };
