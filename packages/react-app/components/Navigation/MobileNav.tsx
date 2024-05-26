@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Cog, Compass, Home, Search, User2 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { cn } from "@/lib/utils";
 
@@ -16,9 +17,14 @@ const mobileNavItems = [
 
 export function MobileNav() {
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-between border-t bg-background lg:hidden">
+    <nav
+      className={`fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-between border-t ${
+        theme === "dark" ? "bg-black" : "bg-white"
+      } lg:hidden`}
+    >
       {mobileNavItems.slice().map(({ label, icon: Icon, href }) => {
         const isActive = href === pathname;
 

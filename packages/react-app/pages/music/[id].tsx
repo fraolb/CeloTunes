@@ -24,7 +24,7 @@ const MusicDetail = () => {
         id: Number(id),
         title: `Song Title ${id}`,
         artist: `Artist Name ${id}`,
-        imageUrl: "https://via.placeholder.com/150",
+        imageUrl: "https://via.placeholder.com/600/51aa97",
         audioUrl: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id}.mp3`,
       };
       setMusicData(data);
@@ -40,7 +40,7 @@ const MusicDetail = () => {
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
-      <div className="max-w-lg w-full rounded overflow-hidden shadow-lg bg-white">
+      <div className="max-w-lg w-full rounded overflow-hidden shadow-lg">
         <img
           src={musicData.imageUrl}
           alt={musicData.title}
@@ -50,9 +50,7 @@ const MusicDetail = () => {
           <h1 className="text-3xl font-bold mt-4 text-center">
             {musicData.title}
           </h1>
-          <p className="text-xl text-center text-gray-700">
-            {musicData.artist}
-          </p>
+          <p className="text-xl text-center ">{musicData.artist}</p>
         </div>
       </div>
       <div className="w-full mt-4">
@@ -62,7 +60,13 @@ const MusicDetail = () => {
           className="rounded"
           customAdditionalControls={[]}
           customVolumeControls={[]}
-          layout="horizontal-reverse"
+          layout="stacked"
+          style={{
+            background: "none",
+            color: "white",
+            border: "none",
+            boxShadow: "none",
+          }}
         />
       </div>
     </div>

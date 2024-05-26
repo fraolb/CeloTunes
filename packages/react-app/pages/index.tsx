@@ -47,28 +47,28 @@ export default function Home() {
       id: 1,
       title: "Song Title 1",
       artist: "Artist Name 1",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://via.placeholder.com/600/92c952",
       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     },
     {
       id: 2,
       title: "Song Title 2",
       artist: "Artist Name 2",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://via.placeholder.com/600/771796",
       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     },
     {
       id: 3,
       title: "Song Title 3",
       artist: "Artist Name 3",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://via.placeholder.com/600/24f355",
       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     },
     {
       id: 4,
       title: "Song Title 4",
       artist: "Artist Name 4",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://via.placeholder.com/600/f66b97",
       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
     },
     // Add more music items as needed
@@ -78,7 +78,20 @@ export default function Home() {
     <div>
       {isConnected ? (
         <div className="container mx-auto p-4">
-          <CardSlider musicData={musicData} />
+          <div>
+            <div className="text-2xl font-bold p-2">Trending Now</div>
+            <CardSlider musicData={musicData} />
+          </div>
+          <div>
+            <div className="text-2xl font-bold p-2">Top Charts</div>
+            <CardSlider musicData={musicData} />
+            <CardSlider musicData={musicData} />
+          </div>
+          <div>
+            <div className="text-2xl font-bold p-2">New Releases</div>
+            <CardSlider musicData={musicData} />
+            <CardSlider musicData={musicData} />
+          </div>
         </div>
       ) : (
         //   </div>

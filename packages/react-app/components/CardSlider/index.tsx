@@ -15,6 +15,16 @@ interface Music {
 interface CardSliderProps {
   musicData: Music[];
 }
+function SamplePrevArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "none", background: "green" }}
+      onClick={onClick}
+    />
+  );
+}
 
 const CardSlider: React.FC<CardSliderProps> = ({ musicData }) => {
   const settings = {
@@ -23,12 +33,16 @@ const CardSlider: React.FC<CardSliderProps> = ({ musicData }) => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 2,
+    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SamplePrevArrow />,
     responsive: [
       {
         breakpoint: 640,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
+          prevArrow: <SamplePrevArrow />,
+          nextArrow: <SamplePrevArrow />,
         },
       },
     ],
