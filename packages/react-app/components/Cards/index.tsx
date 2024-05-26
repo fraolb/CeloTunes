@@ -26,7 +26,7 @@ const Card: React.FC<MusicCardProps> = ({
 
   return (
     <div
-      className="max-w-sm rounded overflow-hidden shadow-lg  m-0"
+      className="max-w-sm rounded-lg overflow-hidden shadow m-0"
       onClick={() => handleClick()}
     >
       <img
@@ -38,9 +38,7 @@ const Card: React.FC<MusicCardProps> = ({
         <div className="font-bold text-sm sm:text-xl mb-2 truncate">
           {title}
         </div>
-        <p className="text-gray-700 font-bold  text-sm sm:text-base truncate">
-          {artist}
-        </p>
+        <p className="text-sm sm:text-base truncate">{artist}</p>
       </div>
       {/* <div className="px-6 pt-4 pb-2">
         <button

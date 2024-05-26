@@ -26,7 +26,7 @@ const Layout: FC<Props> = ({ children }) => {
       <main className="flex-grow">{children}</main>
       {audioSrc && !isDynamicPage && (
         <div
-          className={`fixed bottom-16 h-12 w-full ${
+          className={`fixed bottom-14 h-12 w-full ${
             theme == "dark" ? "bg-gray-900" : "bg-white"
           }  flex justify-between px-2 border border-solid rounded shadow-md`}
           onClick={() => router.push(`/music/${audioSrc.id}`)}

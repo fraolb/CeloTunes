@@ -35,6 +35,7 @@ const CardSlider: React.FC<CardSliderProps> = ({ musicData }) => {
     slidesToScroll: 2,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SamplePrevArrow />,
+
     responsive: [
       {
         breakpoint: 640,

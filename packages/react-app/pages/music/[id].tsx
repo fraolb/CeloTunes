@@ -40,7 +40,7 @@ const MusicDetail = () => {
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
-      <div className="max-w-lg w-full rounded overflow-hidden shadow-lg">
+      <div className="max-w-lg w-full rounded-md overflow-hidden shadow-lg">
         <img
           src={musicData.imageUrl}
           alt={musicData.title}
