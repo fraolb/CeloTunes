@@ -8,8 +8,8 @@ const getAllMusic = async (req, res) => {
 };
 
 const getSingleMusic = async (req, res) => {
-  const { name } = req.body;
-  const music = await Music.find({ name });
+  const { musicIds } = req.body;
+  const music = await Music.find({ _id: musicIds });
 
   if (!music) {
     throw new error("No music was found");
