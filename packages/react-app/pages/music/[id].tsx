@@ -69,6 +69,12 @@ const MusicDetail = () => {
           }}
         />
       </div>
+      <div className="flex mt-4 gap-2 items-center">
+        <div>Buy for</div>
+        <button className="border border-solid p-0.5 px-4 bg-yellow-500 text-white shadow-md rounded-md">
+          1 $
+        </button>
+      </div>
     </div>
   );
 };
