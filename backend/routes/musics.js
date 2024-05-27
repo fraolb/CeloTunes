@@ -6,11 +6,13 @@ const {
   getSingleMusic,
   getMyMusic,
   uploadMusic,
+  buyMusic,
 } = require("../controllers/musics");
 
 router.route("/").get(getAllMusic);
-router.route("/:name").get(getSingleMusic);
-router.route("/my").get(getMyMusic);
+router.route("/single").get(getSingleMusic);
+router.route("/my-music").get(getMyMusic);
 router.route("/add").post(uploadMusic);
+router.route("/buy").post(buyMusic);
 
 module.exports = router;

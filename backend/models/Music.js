@@ -61,7 +61,7 @@ const musicSchema = new mongoose.Schema(
       },
     ],
     createdBy: {
-      type: "String",
+      type: String,
       required: [true, "Please provive the user"],
     },
   },
