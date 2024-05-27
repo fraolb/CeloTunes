@@ -38,8 +38,75 @@ const getMyMusic = async (req, res) => {
 
 const uploadMusic = async (req, res) => {
   console.log("The body data of the music is: ", req.body);
-  const music = await Music.create(req.body);
-  res.status(StatusCodes.CREATED).json(music);
+  //const music = await Music.create(req.body);
+  //res.status(StatusCodes.CREATED).json(music);
+
+  try {
+    // Check if image files were uploaded
+    const filePaths = req.files.map((file) => file.path);
+
+    const imageFiles = filePaths.filter((filePath) =>
+      /\.(png|jpe?g|gif)$/i.test(filePath)
+    );
+
+    const musicFiles = filePaths.filter((filePath) =>
+      /\.(mp3|wav)$/i.test(filePath)
+    );
+
+    if (imageFiles == null || musicFiles == null) {
+      throw Error("File Missing!");
+    }
+
+    // Upload images to Cloudinary
+    const imageUploadPromises = imageFiles.map((image) =>
+      cloudinary.uploader.upload(image.path, {
+        use_filename: true,
+        folder: "file-upload", // Specify the folder on Cloudinary
+      })
+    );
+
+    // Upload musics to Cloudinary
+    const musicUploadPromises = musicFiles.map((music) =>
+      cloudinary.uploader.upload(music.path, {
+        use_filename: true,
+        folder: "file-upload", // Specify the folder on Cloudinary
+      })
+    );
+
+    // Wait for all image uploads to complete
+    const uploadedImages = await Promise.all(imageUploadPromises);
+    // Wait for all music uploads to complete
+    const uploadedMusics = await Promise.all(musicUploadPromises);
+
+    // Remove temporary image and music files
+    imageFiles.forEach((image) => fs.unlinkSync(image.path));
+    musicFiles.forEach((music) => fs.unlinkSync(music.path));
+
+    // Map Cloudinary results to an array of image URLs
+    const imageUrls = uploadedImages.map((result) => result.secure_url);
+    // Map Cloudinary results to an array of music URLs
+    const musicUrls = uploadedMusics.map((result) => result.secure_url);
+
+    // Add the array of image URLs to req.body
+    req.body.images = imageUrls;
+    // Add the array of music URLs to req.body
+    req.body.musics = musicUrls;
+
+    // Add other necessary properties to req.body
+    req.body.createdBy = req.user.userId;
+
+    // Create the music with the updated req.body
+    const product = await Music.create(req.body);
+
+    // Respond with the created product
+    res.status(StatusCodes.CREATED).json(product);
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: "Server error" });
+  }
 };
 
 const buyMusic = async (req, res) => {
