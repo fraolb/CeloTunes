@@ -22,7 +22,8 @@ const getMyMusic = async (req, res) => {
   res.status(StatusCodes.OK).json({ myMusic, count: myMusic.length });
 };
 
-const UploadMusic = async (req, res) => {
+const uploadMusic = async (req, res) => {
+  console.log("The body data of the music is: ", req.body);
   const music = await Music.create(req.body);
   res.status(StatusCodes.CREATED).json(music);
 };
@@ -31,5 +32,5 @@ module.exports = {
   getAllMusic,
   getSingleMusic,
   getMyMusic,
-  UploadMusic,
+  uploadMusic,
 };
