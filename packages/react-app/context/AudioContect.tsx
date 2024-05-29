@@ -1,10 +1,10 @@
-import React, { createContext, useState, useContext } from "react";
-import { FC, ReactNode } from "react";
-
-interface AudioContextProps {
-  audioSrc: MusicCardProps | null;
-  setAudioSrc: (src: MusicCardProps) => void;
-}
+import React, {
+  createContext,
+  useState,
+  useContext,
+  FC,
+  ReactNode,
+} from "react";
 
 interface MusicCardProps {
   id: number;
@@ -12,6 +12,11 @@ interface MusicCardProps {
   artist: string;
   imageUrl: string;
   audioUrl: string;
+}
+
+interface AudioContextProps {
+  audioSrc: MusicCardProps | null;
+  setAudioSrc: (src: MusicCardProps | null) => void; // Allow null
 }
 
 const AudioContext = createContext<AudioContextProps | undefined>(undefined);
