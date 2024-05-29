@@ -3,7 +3,7 @@ require("express-async-errors");
 const express = require("express");
 const connectDB = require("./db/connect");
 const bodyParser = require("body-parser");
-const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
 
 const Upload = require("./multer"); // Import the Multer configuration
 const path = require("path");
@@ -33,6 +33,13 @@ app.post("/upload", Upload.array("data", 2), (req, res) => {
 });
 
 const Musics = require("./routes/musics");
+
+//config cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));

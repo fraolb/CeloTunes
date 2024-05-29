@@ -1,6 +1,8 @@
 const Music = require("../models/Music");
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
 
 const getAllMusic = async (req, res) => {
   const musics = await Music.find({});
@@ -57,9 +59,10 @@ const uploadMusic = async (req, res) => {
       throw Error("File Missing!");
     }
 
+    console.log("the image is ", imageFiles);
     // Upload images to Cloudinary
     const imageUploadPromises = imageFiles.map((image) =>
-      cloudinary.uploader.upload(image.path, {
+      cloudinary.uploader.upload(image, {
         use_filename: true,
         folder: "file-upload", // Specify the folder on Cloudinary
       })
@@ -67,7 +70,8 @@ const uploadMusic = async (req, res) => {
 
     // Upload musics to Cloudinary
     const musicUploadPromises = musicFiles.map((music) =>
-      cloudinary.uploader.upload(music.path, {
+      cloudinary.uploader.upload(music, {
+        resource_type: "video",
         use_filename: true,
         folder: "file-upload", // Specify the folder on Cloudinary
       })
@@ -75,25 +79,36 @@ const uploadMusic = async (req, res) => {
 
     // Wait for all image uploads to complete
     const uploadedImages = await Promise.all(imageUploadPromises);
+    console.log("image upload complete");
     // Wait for all music uploads to complete
     const uploadedMusics = await Promise.all(musicUploadPromises);
+    console.log("music upload complete");
 
     // Remove temporary image and music files
-    imageFiles.forEach((image) => fs.unlinkSync(image.path));
-    musicFiles.forEach((music) => fs.unlinkSync(music.path));
+    imageFiles.forEach((image) => fs.unlinkSync(image));
+    musicFiles.forEach((music) => fs.unlinkSync(music));
+
+    console.log("the uploaded images are ", uploadedImages);
 
     // Map Cloudinary results to an array of image URLs
-    const imageUrls = uploadedImages.map((result) => result.secure_url);
+    const imageUrls = uploadedImages.map((result) => ({
+      public_id: result.public_id,
+      url: result.secure_url,
+    }));
+
     // Map Cloudinary results to an array of music URLs
-    const musicUrls = uploadedMusics.map((result) => result.secure_url);
+    const musicUrls = uploadedMusics.map((result) => ({
+      public_id: result.public_id,
+      url: result.secure_url,
+    }));
 
     // Add the array of image URLs to req.body
-    req.body.images = imageUrls;
+    req.body.image = imageUrls;
     // Add the array of music URLs to req.body
-    req.body.musics = musicUrls;
+    req.body.music = musicUrls;
 
     // Add other necessary properties to req.body
-    req.body.createdBy = req.user.userId;
+    //req.body.createdBy = req.user.userId;
 
     // Create the music with the updated req.body
     const product = await Music.create(req.body);
