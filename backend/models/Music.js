@@ -64,6 +64,10 @@ const musicSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provive the user"],
     },
+    premium: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
