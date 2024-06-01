@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+const cors = require("cors");
 const express = require("express");
 const connectDB = require("./db/connect");
 const bodyParser = require("body-parser");
@@ -10,6 +11,8 @@ const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 4000;
+
+app.use(cors());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
