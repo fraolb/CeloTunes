@@ -33,6 +33,7 @@ app.post("/upload", Upload.array("data", 2), (req, res) => {
 });
 
 const Musics = require("./routes/musics");
+const Subscription = require("./routes/subscription");
 
 //config cloudinary
 cloudinary.config({
@@ -52,6 +53,7 @@ app.get("/api/v1", (req, res) => {
 
 //routes
 app.use("/api/v1/musics", Musics);
+app.use("/api/v1/subscribe", Subscription);
 
 // Start the server
 const start = async () => {
