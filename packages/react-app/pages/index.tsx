@@ -3,21 +3,17 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
-import Main from "@/components/Tabs/Main";
-import Lock from "@/components/Tabs/Lock";
-import Swap from "@/components/Tabs/Swap";
-import MultiSend from "@/components/Tabs/MultiSend";
-import Settings from "@/components/Tabs/Settings";
-import Transfer from "@/components/Tabs/Transfer";
-
-import ThemeToggle from "@/components/ThemeToggle";
-import Card from "@/components/Cards";
 import CardSlider from "@/components/CardSlider";
+
+import { useMusic } from "@/context/MusicContext";
+import { Music } from "@/types/music";
+import { getAllMusic } from "@/service/services";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const { address, isConnected } = useAccount();
-  const [selectedPage, setSelectedPage] = useState(2);
+
+  const { music, setMusic } = useMusic();
 
   if (typeof window !== "undefined") {
     // @ts-ignore
@@ -30,17 +26,14 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    // Fetch music data from an API or database
+    console.log("The music data is ", music);
+  }, [music]);
+
   if (!isMounted) {
     return null;
   }
-
-  const selectPage = (e: number) => {
-    setSelectedPage(e);
-  };
-
-  const handlePlay = () => {
-    console.log("Play");
-  };
 
   const musicData = [
     {
