@@ -13,8 +13,9 @@ import { celo, celoAlfajores } from "wagmi/chains";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
-import { AudioProvider } from "@/context/AudioContect";
+import { AudioProvider } from "@/context/AudioContext";
 import { MusicProvider } from "@/context/MusicContext";
+import { SubscriptionProvider } from "@/context/SubscriptionContext";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -49,13 +50,15 @@ function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
           <ThemeProvider attribute="class">
-            <MusicProvider>
-              <AudioProvider>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </AudioProvider>
-            </MusicProvider>
+            <SubscriptionProvider>
+              <MusicProvider>
+                <AudioProvider>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </AudioProvider>
+              </MusicProvider>
+            </SubscriptionProvider>
           </ThemeProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
