@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { getMyMusic } from "@/service/services";
 import { Music } from "@/types/music";
 import { useAudio } from "@/context/AudioContext";
+import { useSubscription } from "@/context/SubscriptionContext";
+import { subscribeMusic } from "@/service/services";
 
 const Profile = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -15,10 +17,24 @@ const Profile = () => {
   const [myMusic, setMyMusic] = useState<Music[] | undefined>([]);
   const router = useRouter();
   const { setAudioSrc } = useAudio();
+  const subscription = useSubscription();
 
   const handleClick = (music: Music) => {
     setAudioSrc(music);
     router.push(`/music/${music._id}`);
+  };
+
+  const handleSubscribe = async () => {
+    if (!address) {
+      return alert("Connect Wallet");
+    }
+    const subscription = {
+      address: address,
+      subscriptionEnd: "2024-10-01T00:00:00.000Z",
+    };
+    console.log("the data for subscriptio is ", subscription);
+    const res = await subscribeMusic(subscription);
+    console.log("the response for subscription is ", res);
   };
 
   useEffect(() => {
@@ -39,7 +55,7 @@ const Profile = () => {
     }
   }, [address, isConnected]);
 
-  console.log("the myMusic is ", myMusic);
+  console.log("the subscription is ", subscription);
 
   return (
     <div className="justify-center min-h-screen transition-colors duration-300">
@@ -48,6 +64,17 @@ const Profile = () => {
       </div>
       <div className="text-center my-4">
         <h1 className="text-2xl mb-4">Welcome Fraolb</h1>
+        <div>
+          <div>You are {subscription ? "Subscribed" : "Nont subscribed"}</div>
+          <div>
+            <button
+              className="border border-solid p-1 m-2"
+              onClick={() => handleSubscribe()}
+            >
+              Subscribe
+            </button>
+          </div>
+        </div>
 
         <div>
           {openForm ? (

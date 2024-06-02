@@ -86,18 +86,29 @@ export const uploadMusic = async (
 // /subscribe /add  /check
 
 export interface Subscription {
+  _id: string;
   address: string;
+  subscriptionEnd: string;
+  subscriptionStart: string;
+  __v: number;
+}
+
+interface subscriptionInput {
+  address: `0x${string}` | undefined;
   subscriptionEnd: string;
 }
 
 export const subscribeMusic = async (
-  subscription: Subscription
+  subscription: subscriptionInput
 ): Promise<Subscription | undefined> => {
   try {
-    const response = await api_v1.post<Subscription>(
-      "/subscription/add",
-      subscription
-    );
+    const address = subscription.address;
+    const subscriptionEnd = subscription.subscriptionEnd;
+
+    const response = await api_v1.post<Subscription>("subscribe/add", {
+      address,
+      subscriptionEnd,
+    });
     console.log("Subscription created:", response.data);
     return response.data;
   } catch (error) {
@@ -110,8 +121,10 @@ export const checkSubscription = async (
   address: string
 ): Promise<Subscription[] | undefined> => {
   try {
-    const response = await api_v1.post<Subscription[]>("/subscription/check", {
-      address,
+    const response = await api_v1.get<Subscription[]>("subscribe/check", {
+      params: {
+        address: address,
+      },
     });
     console.log("Subscription status:", response.data);
     return response.data;
