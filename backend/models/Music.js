@@ -32,10 +32,6 @@ const musicSchema = new mongoose.Schema(
       ],
       default: "Other",
     },
-    price: {
-      type: Number,
-      required: [true, "Please provice the price of the music!"],
-    },
     image: [
       {
         public_id: {

@@ -28,11 +28,11 @@ const getMyMusic = async (req, res) => {
     console.log("The user address is: ", address);
 
     const myMusic = await Music.find({ createdBy: address });
-    const boughtMusic = await User.find({ createdBy: address });
+    //const boughtMusic = await User.find({ createdBy: address });
 
-    const count = myMusic.length + boughtMusic.length;
+    const count = myMusic.length;
 
-    res.status(200).json({ myMusic, boughtMusic, count }); // Using 200 directly for simplicity
+    res.status(200).json({ myMusic, count }); // Using 200 directly for simplicity
   } catch (error) {
     console.error("Error fetching music data: ", error);
     res.status(500).json({ error: "Internal Server Error" });
