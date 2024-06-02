@@ -15,7 +15,7 @@ const subscribeMusic = async (req, res) => {
 
 const checkSubscription = async (req, res) => {
   try {
-    const { address } = req.body;
+    const { address } = req.query;
     const subscribe = await Subscription.find({ address });
     res.status(StatusCodes.OK).json(subscribe);
   } catch (error) {
