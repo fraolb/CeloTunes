@@ -33,13 +33,20 @@ export const getSingleMusic = async (): Promise<Music | undefined> => {
   }
 };
 
-export const getMyMusic = async (): Promise<Music[] | undefined> => {
+export const getMyMusic = async (
+  address: string
+): Promise<Music[] | undefined> => {
   try {
-    const response = await api_v1.get<{ musics: Music[]; count: number }>(
-      `/musics/my-music`
+    const response = await api_v1.get<{ myMusic: Music[]; count: number }>(
+      `/musics/my-music`,
+      {
+        params: {
+          address: address,
+        },
+      }
     );
-    console.log("music data from geet all music ", response.data.musics);
-    return response.data.musics;
+    console.log("music data from geet all music ", response.data);
+    return response.data.myMusic;
   } catch (error) {
     console.error("Error fetching music data:", error);
     return undefined;
