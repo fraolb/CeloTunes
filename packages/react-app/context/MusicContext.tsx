@@ -24,7 +24,7 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     fetchMusic();
-  }, [music]);
+  }, []);
 
   return (
     <MusicContext.Provider value={{ music, setMusic }}>

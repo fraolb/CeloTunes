@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Cog, Compass, Home, Search, User2 } from "lucide-react";
+import { Cog, Compass, Home, Search, User2, Send } from "lucide-react";
+
 import { useTheme } from "next-themes";
 
 import { cn } from "@/lib/utils";
@@ -10,7 +11,7 @@ import { cn } from "@/lib/utils";
 const mobileNavItems = [
   { label: "Home", icon: Home, href: "/" },
   { label: "Search", icon: Search, href: "/Search" },
-  { label: "Browse", icon: Compass, href: "/browse" },
+  { label: "Send", icon: Send, href: "/browse" },
   { label: "Profile", icon: User2, href: "/Profile" },
   //   { label: "Settings", icon: Cog, href: "/settings" },
 ];
