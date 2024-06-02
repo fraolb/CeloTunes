@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 import { getMyMusic } from "@/service/services";
 import { Music } from "@/types/music";
-import { useAudio } from "@/context/AudioContect";
+import { useAudio } from "@/context/AudioContext";
 
 const Profile = () => {
   const [openForm, setOpenForm] = useState(false);

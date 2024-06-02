@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useAudio } from "@/context/AudioContect";
+import { useAudio } from "@/context/AudioContext";
 import { Music } from "@/types/music";
 
 interface CardProps {

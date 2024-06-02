@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import Navigation from "./Navigation";
-import { useAudio } from "@/context/AudioContect";
+import { useAudio } from "@/context/AudioContext";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { X } from "lucide-react";

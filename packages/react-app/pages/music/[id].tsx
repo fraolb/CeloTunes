@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Music } from "@/types/music";
-import { useAudio } from "@/context/AudioContect";
+import { useAudio } from "@/context/AudioContext";
 
 const MusicDetail = () => {
   const router = useRouter();
