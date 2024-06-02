@@ -29,21 +29,24 @@ const Layout: FC<Props> = ({ children }) => {
           className={`fixed bottom-14 h-12 w-full ${
             theme == "dark" ? "bg-gray-900" : "bg-white"
           }  flex justify-between px-2 border border-solid rounded shadow-md`}
-          onClick={() => router.push(`/music/${audioSrc.id}`)}
         >
           <img
-            src={audioSrc.imageUrl}
+            src={audioSrc.image[0].url}
             alt="Playing music"
-            className="w-16 h-12 object-cover rounded"
+            className="w-16 h-12 object-contain rounded"
+            onClick={() => router.push(`/music/${audioSrc._id}`)}
           />
-          <div className="px-8">
+          <div
+            className="px-8"
+            onClick={() => router.push(`/music/${audioSrc._id}`)}
+          >
             <div className="font-bold text-base truncate">{audioSrc.title}</div>
-            <div className="text-sm truncate">{audioSrc.artist}</div>
+            <div className="text-sm truncate">{audioSrc.name}</div>
           </div>
 
           <div className="flex p-0">
             <AudioPlayer
-              src={audioSrc.audioUrl}
+              src={audioSrc.music[0].url}
               style={{
                 width: "80px",
                 background: "none",

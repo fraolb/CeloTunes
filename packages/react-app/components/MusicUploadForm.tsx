@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAccount } from "wagmi";
+import { uploadMusic } from "@/service/services";
+import "tailwindcss/tailwind.css"; // make sure tailwind is properly configured
 
 const MusicUploadForm: React.FC = () => {
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [genre, setGenre] = useState("Pop");
-  const [price, setPrice] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [genre, setGenre] = useState<string>("Pop");
+  const [walletAddress, setWalletAddress] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [music, setMusic] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  const { address, isConnected } = useAccount();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -22,18 +31,66 @@ const MusicUploadForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
+    if (!name || !title || !genre || !address || !image || !music) {
+      return alert("Please fill all the fields");
+    }
+
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("genre", genre);
+    formData.append("data", image);
+    formData.append("data", music);
+    formData.append("createdBy", address);
+
+    const response = await uploadMusic(formData);
+    setIsLoading(false);
+    if (response) {
+      setNotification({ message: "Upload successful!", type: "success" });
+      // Clear the form data
+      setName("");
+      setTitle("");
+      setDescription("");
+      setGenre("Pop");
+      setImage(null);
+      setMusic(null);
+    } else {
+      setNotification({
+        message: "Upload failed. Please try again.",
+        type: "error",
+      });
+    }
+
+    // Hide the notification after 3 seconds
+    setTimeout(() => setNotification(null), 3000);
   };
+
+  useEffect(() => {
+    if (isConnected && address) {
+      setWalletAddress(address);
+    }
+  }, [isConnected, address]);
 
   return (
     <div className="max-w-md mx-auto p-4">
+      {notification && (
+        <div
+          className={`fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 p-4 rounded shadow-lg ${
+            notification.type === "success" ? "bg-green-500" : "bg-red-500"
+          } text-white`}
+        >
+          {notification.message}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex items-center">
           <label
             htmlFor="name"
-            className="block text-sm font-medium  w-1/3 text-left"
+            className="block text-sm font-medium w-1/3 text-left"
           >
             Name
           </label>
@@ -50,7 +107,7 @@ const MusicUploadForm: React.FC = () => {
         <div className="flex items-center">
           <label
             htmlFor="title"
-            className="block text-sm font-medium  w-1/3 text-left"
+            className="block text-sm font-medium w-1/3 text-left"
           >
             Title
           </label>
@@ -67,7 +124,7 @@ const MusicUploadForm: React.FC = () => {
         <div className="flex items-center">
           <label
             htmlFor="description"
-            className="block text-sm font-medium  w-1/3 text-left"
+            className="block text-sm font-medium w-1/3 text-left"
           >
             Description
           </label>
@@ -76,14 +133,13 @@ const MusicUploadForm: React.FC = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            required
           />
         </div>
 
         <div className="flex items-center">
           <label
             htmlFor="genre"
-            className="block text-sm font-medium  w-1/3 text-left"
+            className="block text-sm font-medium w-1/3 text-left"
           >
             Genre
           </label>
@@ -104,30 +160,8 @@ const MusicUploadForm: React.FC = () => {
 
         <div className="flex items-center">
           <label
-            htmlFor="price"
-            className="block text-sm font-medium  w-1/3 text-left"
-          >
-            Price
-          </label>
-          <div className="relative w-full">
-            <input
-              type="number"
-              id="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md pr-8"
-              required
-            />
-            <span className="absolute inset-y-0 right-0 flex items-center pr-3 ">
-              $
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center">
-          <label
             htmlFor="image"
-            className="block text-sm font-medium  w-1/3 text-left"
+            className="block text-sm font-medium w-1/3 text-left"
           >
             Image
           </label>
@@ -136,7 +170,7 @@ const MusicUploadForm: React.FC = () => {
             id="image"
             accept="image/*"
             onChange={handleImageChange}
-            className="mt-1 block w-full text-sm "
+            className="mt-1 block w-full text-sm"
             required
           />
         </div>
@@ -144,7 +178,7 @@ const MusicUploadForm: React.FC = () => {
         <div className="flex items-center">
           <label
             htmlFor="music"
-            className="block text-sm font-medium  w-1/3 text-left"
+            className="block text-sm font-medium w-1/3 text-left"
           >
             Music
           </label>
@@ -153,7 +187,7 @@ const MusicUploadForm: React.FC = () => {
             id="music"
             accept="audio/*"
             onChange={handleMusicChange}
-            className="mt-1 block w-full text-sm "
+            className="mt-1 block w-full text-sm"
             required
           />
         </div>
@@ -161,13 +195,45 @@ const MusicUploadForm: React.FC = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+            className={`px-4 py-2 rounded-md text-white ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-700"
+            }`}
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <svg
+                  className="animate-spin h-5 w-5 mr-3 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Uploading...
+              </div>
+            ) : (
+              "Submit"
+            )}
           </button>
         </div>
       </form>
     </div>
   );
 };
+
 export default MusicUploadForm;

@@ -1,53 +1,40 @@
-interface MusicCardProps {
-  id: number;
-  title: string;
-  artist: string;
-  imageUrl: string;
-  audioUrl: string;
-}
-
 import { useRouter } from "next/router";
 import { useAudio } from "@/context/AudioContect";
+import { Music } from "@/types/music";
 
-const Card: React.FC<MusicCardProps> = ({
-  id,
-  title,
-  artist,
-  imageUrl,
-  audioUrl,
-}) => {
+interface CardProps {
+  music: Music;
+}
+
+const Card: React.FC<CardProps> = ({ music }) => {
   const router = useRouter();
   const { setAudioSrc } = useAudio();
 
   const handleClick = () => {
-    setAudioSrc({ id, title, artist, imageUrl, audioUrl });
-    router.push(`/music/${id}`);
+    setAudioSrc(music);
+    router.push(`/music/${music._id}`);
   };
 
   return (
     <div
       className="max-w-sm rounded-lg overflow-hidden shadow m-0"
-      onClick={() => handleClick()}
+      onClick={handleClick}
     >
-      <img
-        className="w-full h-20 sm:h-40 md:h-48 object-cover"
-        src={imageUrl}
-        alt={`${title} cover`}
-      />
-      <div className="px-2 py-2">
-        <div className="font-bold text-sm sm:text-xl mb-2 truncate">
-          {title}
+      {music !== null && (
+        <div>
+          <img
+            className="w-full h-20 sm:h-40 md:h-48 object-contain"
+            src={music?.image[0]?.url}
+            alt={`${music.title} cover`}
+          />
+          <div className="px-2 py-2">
+            <div className="font-bold text-sm sm:text-xl mb-2 truncate">
+              {music.title}
+            </div>
+            <p className="text-sm sm:text-base truncate">{music.name}</p>
+          </div>
         </div>
-        <p className="text-sm sm:text-base truncate">{artist}</p>
-      </div>
-      {/* <div className="px-6 pt-4 pb-2">
-        <button
-          onClick={onClick}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Play
-        </button>
-      </div> */}
+      )}
     </div>
   );
 };

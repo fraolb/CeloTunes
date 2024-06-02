@@ -2,36 +2,31 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-
-interface MusicCardProps {
-  id: number;
-  title: string;
-  artist: string;
-  imageUrl: string;
-  audioUrl: string;
-}
+import { Music } from "@/types/music";
+import { useAudio } from "@/context/AudioContect";
 
 const MusicDetail = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { audioSrc, setAudioSrc } = useAudio();
 
-  const [musicData, setMusicData] = useState<MusicCardProps | null>(null);
+  const [musicData, setMusicData] = useState<Music | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      // Fetch or get the music data based on the ID
-      const data = {
-        id: Number(id),
-        title: `Song Title ${id}`,
-        artist: `Artist Name ${id}`,
-        imageUrl: "https://via.placeholder.com/600/51aa97",
-        audioUrl: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id}.mp3`,
-      };
-      setMusicData(data);
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     // Fetch or get the music data based on the ID
+  //     const data = {
+  //       id: Number(id),
+  //       title: `Song Title ${id}`,
+  //       artist: `Artist Name ${id}`,
+  //       imageUrl: "https://via.placeholder.com/600/51aa97",
+  //       audioUrl: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id}.mp3`,
+  //     };
+  //     setMusicData(data);
+  //   }
+  // }, [id]);
 
-  if (!musicData)
+  if (!audioSrc)
     return (
       <div className="flex items-center justify-center h-screen">
         Loading...
@@ -42,20 +37,20 @@ const MusicDetail = () => {
     <div className="container mx-auto p-4 flex flex-col items-center">
       <div className="max-w-lg w-full rounded-md overflow-hidden shadow-lg">
         <img
-          src={musicData.imageUrl}
-          alt={musicData.title}
-          className="w-full h-48 object-cover"
+          src={audioSrc.image[0].url}
+          alt={audioSrc.title}
+          className="w-full h-48 object-contain"
         />
         <div className="px-6 py-4">
           <h1 className="text-3xl font-bold mt-4 text-center">
-            {musicData.title}
+            {audioSrc.title}
           </h1>
-          <p className="text-xl text-center ">{musicData.artist}</p>
+          <p className="text-xl text-center ">{audioSrc.name}</p>
         </div>
       </div>
       <div className="w-full mt-4">
         <AudioPlayer
-          src={musicData.audioUrl}
+          src={audioSrc.music[0].url}
           volume={0.5}
           className="rounded"
           customAdditionalControls={[]}

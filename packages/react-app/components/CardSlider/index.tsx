@@ -4,13 +4,7 @@ import Card from "../Cards";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-interface Music {
-  id: number;
-  title: string;
-  artist: string;
-  imageUrl: string;
-  audioUrl: string;
-}
+import { Music } from "@/types/music";
 
 interface CardSliderProps {
   musicData: Music[];
@@ -53,13 +47,7 @@ const CardSlider: React.FC<CardSliderProps> = ({ musicData }) => {
     <Slider {...settings}>
       {musicData.map((music, index) => (
         <div key={index} className="p-1">
-          <Card
-            id={music.id}
-            title={music.title}
-            artist={music.artist}
-            imageUrl={music.imageUrl}
-            audioUrl={music.audioUrl}
-          />
+          <Card music={music} />
         </div>
       ))}
     </Slider>

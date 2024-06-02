@@ -5,18 +5,11 @@ import React, {
   FC,
   ReactNode,
 } from "react";
-
-interface MusicCardProps {
-  id: number;
-  title: string;
-  artist: string;
-  imageUrl: string;
-  audioUrl: string;
-}
+import { Music } from "@/types/music";
 
 interface AudioContextProps {
-  audioSrc: MusicCardProps | null;
-  setAudioSrc: (src: MusicCardProps | null) => void; // Allow null
+  audioSrc: Music | null;
+  setAudioSrc: (src: Music | null) => void; // Allow null
 }
 
 const AudioContext = createContext<AudioContextProps | undefined>(undefined);
@@ -26,7 +19,7 @@ interface Props {
 }
 
 export const AudioProvider: FC<Props> = ({ children }) => {
-  const [audioSrc, setAudioSrc] = useState<MusicCardProps | null>(null);
+  const [audioSrc, setAudioSrc] = useState<Music | null>(null);
 
   return (
     <AudioContext.Provider value={{ audioSrc, setAudioSrc }}>
