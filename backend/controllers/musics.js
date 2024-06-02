@@ -25,10 +25,12 @@ const getMyMusic = async (req, res) => {
   try {
     const { address } = req.query;
 
-    console.log("The user address is: ", address);
+    // console.log("The user address is: ", address);
 
     const myMusic = await Music.find({ createdBy: address });
     //const boughtMusic = await User.find({ createdBy: address });
+
+    // console.log("The user musics are : ", myMusic);
 
     const count = myMusic.length;
 
@@ -40,7 +42,7 @@ const getMyMusic = async (req, res) => {
 };
 
 const uploadMusic = async (req, res) => {
-  console.log("The body data of the music is: ", req.body);
+  // console.log("The body data of the music is: ", req.body);
   //const music = await Music.create(req.body);
   //res.status(StatusCodes.CREATED).json(music);
 
@@ -60,7 +62,7 @@ const uploadMusic = async (req, res) => {
       throw Error("File Missing!");
     }
 
-    console.log("the image is ", imageFiles);
+    // console.log("the image is ", imageFiles);
     // Upload images to Cloudinary
     const imageUploadPromises = imageFiles.map((image) =>
       cloudinary.uploader.upload(image, {
@@ -80,16 +82,16 @@ const uploadMusic = async (req, res) => {
 
     // Wait for all image uploads to complete
     const uploadedImages = await Promise.all(imageUploadPromises);
-    console.log("image upload complete");
+    // console.log("image upload complete");
     // Wait for all music uploads to complete
     const uploadedMusics = await Promise.all(musicUploadPromises);
-    console.log("music upload complete");
+    // console.log("music upload complete");
 
     // Remove temporary image and music files
     imageFiles.forEach((image) => fs.unlinkSync(image));
     musicFiles.forEach((music) => fs.unlinkSync(music));
 
-    console.log("the uploaded images are ", uploadedImages);
+    // console.log("the uploaded images are ", uploadedImages);
 
     // Map Cloudinary results to an array of image URLs
     const imageUrls = uploadedImages.map((result) => ({
