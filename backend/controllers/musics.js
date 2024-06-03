@@ -134,35 +134,39 @@ const addMusic = async (req, res) => {
     if (!address || !musicIds) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "createdBy and musicIds are required" });
-    }
-
-    console.log("music id: ", musicIds);
-    // Validate that all provided music IDs exist in the Music collection
-    const validMusic = await Music.find({ _id: musicIds });
-    if (!validMusic) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Some music IDs are invalid" });
+        .json({ error: "Address and musicId are required" });
     }
 
     // Check if user already exists
     let user = await User.findOne({ address });
+    //console.log("user found ", user);
 
-    if (user) {
-      // User exists, update their music array with unique music IDs
-      user.music = [...new Set([...user.music, ...musicIds])];
-      await user.save();
-    } else {
-      // User does not exist, create a new user
+    if (!user) {
+      // User does not exist, return error
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "User Doesnt exist" });
+        .json({ error: "User doesn't exist" });
     }
 
-    res.status(StatusCodes.CREATED).json(user);
+    // Validate that the provided music ID exists in the Music collection
+    const validMusic = await Music.findById(musicIds);
+    if (!validMusic) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Invalid music ID" });
+    }
+
+    //console.log("music found ", validMusic);
+
+    // Update user's music array with the new music ID if it's not already present
+    if (!user.music.includes(musicIds)) {
+      user.music.push(musicIds);
+      await user.save();
+    }
+
+    res.status(StatusCodes.OK).json(user);
   } catch (error) {
-    console.error("Error in buyMusic: ", error);
+    console.error("Error in addMusic: ", error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "Internal Server Error" });
