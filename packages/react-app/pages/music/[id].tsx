@@ -127,7 +127,7 @@ const MusicDetail = () => {
       {user == null ? (
         <div className="my-4">
           <div className="text-center">
-            You haven't created an account yet...
+            You haven&apos;t created an account yet...
           </div>
           <div className="flex justify-center">
             <button

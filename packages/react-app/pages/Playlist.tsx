@@ -60,7 +60,7 @@ const Playlist = () => {
       </div>
       {user == null ? (
         <div className="my-8">
-          <div className="text-center">..oops you don't have account</div>
+          <div className="text-center">..oops you don&apos;t have account</div>
           <div className="flex justify-center">
             <button
               onClick={() => router.push(`/SignUp/`)}
