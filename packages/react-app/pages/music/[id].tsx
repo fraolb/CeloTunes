@@ -4,11 +4,13 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Music } from "@/types/music";
 import { useAudio } from "@/context/AudioContext";
+import { useSubscription } from "@/context/SubscriptionContext";
 
 const MusicDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const { audioSrc, setAudioSrc } = useAudio();
+  const subscription = useSubscription();
 
   const [musicData, setMusicData] = useState<Music | null>(null);
 
@@ -64,12 +66,17 @@ const MusicDetail = () => {
           }}
         />
       </div>
-      <div className="flex mt-4 gap-2 items-center">
-        <div>Buy for</div>
-        <button className="border border-solid p-0.5 px-4 bg-yellow-500 text-white shadow-md rounded-md">
-          1 $
-        </button>
-      </div>
+      {!subscription && (
+        <div className="flex flex-col mt-4 gap-2 items-center">
+          <div>Subscribe to listen unlimited</div>
+          <button
+            className=" p-1 px-2 m-2 bg-yellow-500 text-white shadow-md rounded-md"
+            onClick={() => router.push(`/Subscribe`)}
+          >
+            Subscribe
+          </button>
+        </div>
+      )}
     </div>
   );
 };

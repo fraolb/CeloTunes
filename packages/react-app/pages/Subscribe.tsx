@@ -197,7 +197,7 @@ const Subscribe = () => {
         </div>
         <button
           onClick={handleSubscribe}
-          className="w-full bg-emerald-600 text-white my-2 py-2 rounded"
+          className="w-full bg-yellow-500 text-white my-2 py-2 rounded shadow-md"
           disabled={isPending}
         >
           {isPending || isConfirming ? (

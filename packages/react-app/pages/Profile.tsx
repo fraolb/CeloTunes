@@ -83,7 +83,7 @@ const Profile = () => {
             <div>
               <div>You haven't subscribed yet!</div>
               <button
-                className="border border-solid p-1 px-2 m-2 rounded-lg bg-green-600 text-white"
+                className=" p-1 px-2 m-2 rounded-lg bg-yellow-500 text-white shadow-md"
                 onClick={() => router.push(`/Subscribe`)}
               >
                 Subscribe
