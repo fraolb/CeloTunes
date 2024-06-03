@@ -1,17 +1,37 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { useRouter } from "next/router";
+import { useMusic } from "@/context/MusicContext";
+import { useAudio } from "@/context/AudioContext";
+import { Music } from "@/types/music";
 
 const SearchMusic: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [showTrending, setShowTrending] = useState(true);
-
+  const [searchedMusic, setSearchedMusic] = useState<Music[] | null>(null);
+  const { music, setMusic } = useMusic();
   const router = useRouter();
+  const { setAudioSrc } = useAudio();
+
+  // Function to filter music data based on the search query
+  const searchMusic = (query: string) => {
+    const search = music.filter((song) =>
+      song.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchedMusic(search);
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-    // Hide trending when user starts typing
+    const query = event.target.value;
+    setSearchValue(query);
     setShowTrending(false);
+    // Perform search and update music context
+    searchMusic(query);
+  };
+
+  const handleClick = (music: Music) => {
+    setAudioSrc(music);
+    router.push(`/music/${music._id}`);
   };
 
   return (
@@ -30,7 +50,6 @@ const SearchMusic: React.FC = () => {
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Trending Searches</h2>
           <ul className="grid grid-cols-2 gap-2">
-            {/* Trending search items */}
             <li className="border border-solid rounded-md p-2">
               Trending Search 1
             </li>
@@ -42,24 +61,28 @@ const SearchMusic: React.FC = () => {
           </ul>
         </div>
       )}
-      {searchValue != "" && (
+      {searchValue !== "" && (
         <div className="mt-4">
-          <div
-            className="flex h-16 border border-solid"
-            onClick={() => router.push(`/music/1`)}
-          >
-            <img
-              src="https://via.placeholder.com/600/51aa97"
-              alt="searched"
-              className="w-16 object-cover"
-            />
-            <div className="px-8 center flex flex-col align-middle">
-              <div className="font-bold text-base truncate">
-                The man of Sorrows
+          {searchedMusic !== null &&
+            searchedMusic.map((song) => (
+              <div
+                key={song._id}
+                className="flex h-16 border border-solid cursor-pointer"
+                onClick={() => handleClick(song)}
+              >
+                <img
+                  src={song.image[0].url}
+                  alt={song.title}
+                  className="w-16 object-cover"
+                />
+                <div className="px-8 center flex flex-col align-middle">
+                  <div className="font-bold text-base truncate">
+                    {song.title}
+                  </div>
+                  <div className="text-sm truncate">{song.name}</div>
+                </div>
               </div>
-              <div className="text-sm truncate">Bob M.</div>
-            </div>
-          </div>
+            ))}
         </div>
       )}
     </div>
