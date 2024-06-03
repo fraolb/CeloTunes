@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@celo/contractkit": "^8.0.0",
+    "@celo/identity": "^5.1.2",
+    "@celo/poprf": "^0.1.9",
+    "@celo/rainbowkit-celo": "^1.2.0",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@rainbow-me/rainbowkit": "^2.0.2",
@@ -18,7 +21,7 @@
     "@wagmi/connectors": "4.1.18",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
-    "ethers": "^5.7.2",
+    "ethers": "^6.12.2",
     "lucide-react": "^0.379.0",
     "next": "^13.4.2",
     "next-themes": "^0.3.0",
@@ -30,7 +33,7 @@
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.3.0",
     "viem": "2.8.18",
-    "wagmi": "2.5.12"
+    "wagmi": "^2.9.8"
   },
   "devDependencies": {
     "@types/node": "^20.2.1",

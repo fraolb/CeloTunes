@@ -21,6 +21,8 @@ import Head from "next/head";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID as string;
+
 const connectors = connectorsForWallets(
   [
     {
@@ -29,8 +31,8 @@ const connectors = connectorsForWallets(
     },
   ],
   {
-    appName: "Celo Composer",
-    projectId: "044601f65212332475a09bc14ceb3c34",
+    appName: "CeloTunes",
+    projectId,
   }
 );
 
