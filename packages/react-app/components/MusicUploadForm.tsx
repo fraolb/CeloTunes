@@ -154,7 +154,9 @@ const MusicUploadForm: React.FC = () => {
             <option value="Classical">Classical</option>
             <option value="Jazz">Jazz</option>
             <option value="Hiphop">Hiphop</option>
-            {/* Add more genres as needed */}
+            <option value="EDM">EDM</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
@@ -190,6 +192,10 @@ const MusicUploadForm: React.FC = () => {
             className="mt-1 block w-full text-sm"
             required
           />
+        </div>
+        <div className="flex justify-center gap-2">
+          <input type="checkbox" required />
+          <div>I agree with the terms.</div>
         </div>
 
         <div className="text-center">

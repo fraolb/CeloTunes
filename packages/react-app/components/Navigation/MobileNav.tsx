@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Cog, Compass, Home, Search, User2, Send } from "lucide-react";
+import {
+  Cog,
+  Compass,
+  Home,
+  Search,
+  User2,
+  Send,
+  ListMusic,
+} from "lucide-react";
 
 import { useTheme } from "next-themes";
 
@@ -11,7 +19,7 @@ import { cn } from "@/lib/utils";
 const mobileNavItems = [
   { label: "Home", icon: Home, href: "/" },
   { label: "Search", icon: Search, href: "/Search" },
-  { label: "Send", icon: Send, href: "/browse" },
+  { label: "Playlist", icon: ListMusic, href: "/Playlist" },
   { label: "Profile", icon: User2, href: "/Profile" },
   //   { label: "Settings", icon: Cog, href: "/settings" },
 ];
@@ -35,7 +43,7 @@ export function MobileNav() {
             href={href}
             className={cn(
               "flex h-full w-1/4 flex-col items-center justify-center text-center text-muted-foreground duration-700 animate-in slide-in-from-bottom-full",
-              isActive && "text-secondary-foreground"
+              isActive && "text-amber-400"
             )}
           >
             <Icon />

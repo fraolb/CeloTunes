@@ -16,6 +16,7 @@ import { ThemeProvider } from "next-themes";
 import { AudioProvider } from "@/context/AudioContext";
 import { MusicProvider } from "@/context/MusicContext";
 import { SubscriptionProvider } from "@/context/SubscriptionContext";
+import { UserProvider } from "@/context/UserContext";
 import Head from "next/head";
 
 import "slick-carousel/slick/slick.css";
@@ -55,16 +56,18 @@ function App({ Component, pageProps }: AppProps) {
           <ThemeProvider attribute="class">
             <SubscriptionProvider>
               <MusicProvider>
-                <AudioProvider>
-                  <Layout>
-                    <Head>
-                      <link rel="icon" href="/CTIcon.png" />
+                <UserProvider>
+                  <AudioProvider>
+                    <Layout>
+                      <Head>
+                        <link rel="icon" href="/CTIcon.png" />
 
-                      <title>CeloTunes</title>
-                    </Head>
-                    <Component {...pageProps} />
-                  </Layout>
-                </AudioProvider>
+                        <title>CeloTunes</title>
+                      </Head>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </AudioProvider>
+                </UserProvider>
               </MusicProvider>
             </SubscriptionProvider>
           </ThemeProvider>

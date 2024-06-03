@@ -50,14 +50,10 @@ const SearchMusic: React.FC = () => {
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Trending Searches</h2>
           <ul className="grid grid-cols-2 gap-2">
-            <li className="border border-solid rounded-md p-2">
-              Trending Search 1
-            </li>
-            <li className="border border-solid rounded-md p-2">
-              Trending Search 2
-            </li>
-            <li className="border border-solid rounded-md p-2">Trending</li>
-            <li className="border border-solid rounded-md p-2">Trending</li>
+            <li className="border border-solid rounded-md p-2">Trending ...</li>
+            <li className="border border-solid rounded-md p-2">Lil Man</li>
+            <li className="border border-solid rounded-md p-2">Storm</li>
+            <li className="border border-solid rounded-md p-2">heart break</li>
           </ul>
         </div>
       )}

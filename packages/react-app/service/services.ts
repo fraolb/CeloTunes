@@ -133,3 +133,74 @@ export const checkSubscription = async (
     return undefined;
   }
 };
+
+///user
+
+interface userInput {
+  address: string | undefined;
+  name: string;
+}
+interface userData {
+  address: string | undefined;
+  name: string;
+  music: [];
+}
+
+export const createUser = async (
+  userData: userInput
+): Promise<userData[] | undefined> => {
+  try {
+    const address = userData.address;
+    const name = userData.name;
+
+    const response = await api_v1.post<userData[]>("user/create", {
+      address,
+      name,
+    });
+    console.log("User created:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return undefined;
+  }
+};
+
+export const checkUser = async (
+  address: string
+): Promise<userData[] | undefined> => {
+  try {
+    const response = await api_v1.get<userData[]>("user/get", {
+      params: {
+        address: address,
+      },
+    });
+    console.log("User status:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error checking user:", error);
+    return undefined;
+  }
+};
+
+//add to playlist
+interface PlaylistData {
+  address: `0x${string}`;
+  musicIds: string;
+}
+export const addToPlaylist = async (
+  playlistData: PlaylistData
+): Promise<userData[] | undefined> => {
+  try {
+    const { address, musicIds } = playlistData;
+
+    const response = await api_v1.post<userData[]>("/musics/add", {
+      address,
+      musicIds,
+    });
+    console.log("Playlist added:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding to playlist:", error);
+    return undefined;
+  }
+};
