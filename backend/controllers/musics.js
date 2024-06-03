@@ -127,11 +127,11 @@ const uploadMusic = async (req, res) => {
   }
 };
 
-const buyMusic = async (req, res) => {
+const addMusic = async (req, res) => {
   try {
-    const { createdBy, musicIds } = req.body;
+    const { address, musicIds } = req.body;
 
-    if (!createdBy || !musicIds) {
+    if (!address || !musicIds) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "createdBy and musicIds are required" });
@@ -147,7 +147,7 @@ const buyMusic = async (req, res) => {
     }
 
     // Check if user already exists
-    let user = await User.findOne({ createdBy });
+    let user = await User.findOne({ address });
 
     if (user) {
       // User exists, update their music array with unique music IDs
@@ -155,7 +155,9 @@ const buyMusic = async (req, res) => {
       await user.save();
     } else {
       // User does not exist, create a new user
-      user = await User.create({ createdBy, music: musicIds });
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "User Doesnt exist" });
     }
 
     res.status(StatusCodes.CREATED).json(user);
@@ -172,5 +174,5 @@ module.exports = {
   getSingleMusic,
   getMyMusic,
   uploadMusic,
-  buyMusic,
+  addMusic,
 };

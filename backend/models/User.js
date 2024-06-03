@@ -2,15 +2,18 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    createdBy: {
+    userAddress: {
       type: "String",
       required: [true, "Please provive the user address"],
+    },
+    userName: {
+      type: "String",
+      required: [true, "Please provive the user name"],
     },
     music: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Music",
-        required: true,
       },
     ],
   },
