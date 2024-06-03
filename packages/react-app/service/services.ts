@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Music } from "@/types/music";
 
-const BASE_URL = "celotunes-production.up.railway.app/api/v1";
+const BASE_URL = "https://celotunes-production.up.railway.app/api/v1";
 
 const api_v1 = axios.create({
   baseURL: BASE_URL,
