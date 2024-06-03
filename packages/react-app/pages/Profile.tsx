@@ -81,7 +81,7 @@ const Profile = () => {
             </div>
           ) : (
             <div>
-              <div>You haven't subscribed yet!</div>
+              <div>You haven&apos;t subscribed yet!</div>
               <button
                 className=" p-1 px-2 m-2 rounded-lg bg-yellow-500 text-white shadow-md"
                 onClick={() => router.push(`/Subscribe`)}
