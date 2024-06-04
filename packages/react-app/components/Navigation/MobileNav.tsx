@@ -32,7 +32,7 @@ export function MobileNav() {
     <nav
       className={`fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-between border-t ${
         theme === "dark" ? "bg-black" : "bg-white"
-      } lg:hidden`}
+      } `}
     >
       {mobileNavItems.slice().map(({ label, icon: Icon, href }) => {
         const isActive = href === pathname;
